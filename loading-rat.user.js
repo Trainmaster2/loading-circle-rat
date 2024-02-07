@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      2.0
+// @version      2.1
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
 // @match        *://*.youtube.com/*
 // @match        *://*.instructuremedia.com/*
+// @match        *://*.canvadocs.instructure.com/*
 // @match        *://*.roosterteeth.com/*
 // @match        *://*.megacloud.tv/*
 // @icon         https://i.kym-cdn.com/photos/images/original/002/422/229/cd5.gif
@@ -16,20 +17,22 @@
 
     const ratURL = "https://i.kym-cdn.com/photos/images/original/002/422/229/cd5.gif";
 
-    const isYouTube = /^(.*\.)*youtube\.com$/.test(location.hostname);
-    const isCanvasVideo = /^(.*\.)*instructuremedia\.com$/.test(location.hostname);
+    const isYouTube      = /^(.*\.)*youtube\.com$/.test(location.hostname);
+    const isCanvasVideo  = /^(.*\.)*instructuremedia\.com$/.test(location.hostname);
+    const isCanvasDoc    = /^(.*\.)*canvadocs\.instructure\.com$/.test(location.hostname);
     const isRoosterTeeth = /^(.*\.)*roosterteeth\.com$/.test(location.hostname);
-    const isAniWatch = /^(.*\.)*megacloud\.tv$/.test(location.hostname);
+    const isAniWatch     = /^(.*\.)*megacloud\.tv$/.test(location.hostname);
 
-    let targetClass, ratClasses, doKidnap;
+    let targetClass, ratClasses, doKidnap, stealClasses = false;
     if (isYouTube) {
         targetClass = "ytp-spinner-container";
         ratClasses = ["ytp-spinner-container"];
-        doKidnap = false;
     } else if (isCanvasVideo) {
         targetClass = "css-1pisf2f-view-spinner";
         ratClasses = ["css-1pisf2f-view-spinner"];
-        doKidnap = false;
+    } else if (isCanvasDoc) {
+        targetClass = "InstUISpinner";
+        stealClasses = true;
     } else if (isRoosterTeeth) {
         targetClass = "vjs-loading-spinner";
         ratClasses = ["vjs-loading-spinner"];
@@ -37,7 +40,6 @@
     } else if (isAniWatch) {
         targetClass = "jw-svg-icon-buffer";
         ratClasses = ["jw-svg-icon", "jw-svg-icon-buffer"];
-        doKidnap = false;
     } else {
         return;
     }
@@ -46,7 +48,7 @@
         [...document.getElementsByClassName(targetClass)].filter((buffer) => buffer.tagName !== "IMG").forEach((buffer) => {
             const rat = document.createElement("img");
             rat.src = ratURL;
-            rat.classList.add(...ratClasses);
+            rat.classList.add(...(stealClasses ? buffer.classList : ratClasses));
 
             buffer.parentElement.replaceChild(rat, buffer);
             if (doKidnap) {
