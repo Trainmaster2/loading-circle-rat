@@ -1,21 +1,23 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      2.2
+// @version      2.3
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
+// @downloadURL  https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js
+// @updateURL    https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js
 // @match        *://*.youtube.com/*
 // @match        *://*.instructuremedia.com/*
 // @match        *://*.canvadocs.instructure.com/*
 // @match        *://*.roosterteeth.com/*
 // @match        *://*.megacloud.tv/*
-// @icon         https://i.kym-cdn.com/photos/images/original/002/422/229/cd5.gif
+// @icon         https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    const ratURL = "https://i.kym-cdn.com/photos/images/original/002/422/229/cd5.gif";
+    const ratURL = "https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif";
 
     const isYouTube      = /^(.*\.)*youtube\.com$/.test(location.hostname);
     const isCanvasVideo  = /^(.*\.)*instructuremedia\.com$/.test(location.hostname);
