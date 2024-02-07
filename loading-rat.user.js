@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      2.1
+// @version      2.2
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
 // @match        *://*.youtube.com/*
@@ -23,23 +23,21 @@
     const isRoosterTeeth = /^(.*\.)*roosterteeth\.com$/.test(location.hostname);
     const isAniWatch     = /^(.*\.)*megacloud\.tv$/.test(location.hostname);
 
-    let targetClass, ratClasses, doKidnap, stealClasses = false;
+    let targetClass  = "";
+    let ratClasses   = [];
+    let doKidnap     = false;
+    let stealClasses = true;
     if (isYouTube) {
         targetClass = "ytp-spinner-container";
-        ratClasses = ["ytp-spinner-container"];
     } else if (isCanvasVideo) {
         targetClass = "css-1pisf2f-view-spinner";
-        ratClasses = ["css-1pisf2f-view-spinner"];
     } else if (isCanvasDoc) {
         targetClass = "InstUISpinner";
-        stealClasses = true;
     } else if (isRoosterTeeth) {
         targetClass = "vjs-loading-spinner";
-        ratClasses = ["vjs-loading-spinner"];
         doKidnap = true;
     } else if (isAniWatch) {
         targetClass = "jw-svg-icon-buffer";
-        ratClasses = ["jw-svg-icon", "jw-svg-icon-buffer"];
     } else {
         return;
     }
