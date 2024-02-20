@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      2.3
+// @version      3.0
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
 // @downloadURL  https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js
@@ -44,7 +44,7 @@
         return;
     }
 
-    setInterval(() => {
+    const observer = new MutationObserver(function(mrs) {
         [...document.getElementsByClassName(targetClass)].filter((buffer) => buffer.tagName !== "IMG").forEach((buffer) => {
             const rat = document.createElement("img");
             rat.src = ratURL;
@@ -57,5 +57,9 @@
                 }
             }
         })
-    }, 100)
+    });
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
 })();
