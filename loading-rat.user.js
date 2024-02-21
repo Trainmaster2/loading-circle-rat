@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      4.0
+// @version      4.1
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
+// @icon         https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif
 // @downloadURL  https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js
 // @updateURL    https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js
 // @match        *://*.youtube.com/*
@@ -11,7 +12,7 @@
 // @match        *://*.roosterteeth.com/*
 // @match        *://*.megacloud.tv/*
 // @match        *://*.static.crunchyroll.com/*
-// @icon         https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif
+// @run-at       document-start
 // @grant        none
 // ==/UserScript==
 
