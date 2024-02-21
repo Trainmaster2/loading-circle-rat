@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      3.0
+// @version      4.0
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
 // @downloadURL  https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js
@@ -10,6 +10,7 @@
 // @match        *://*.canvadocs.instructure.com/*
 // @match        *://*.roosterteeth.com/*
 // @match        *://*.megacloud.tv/*
+// @match        *://*.static.crunchyroll.com/*
 // @icon         https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif
 // @grant        none
 // ==/UserScript==
@@ -24,31 +25,37 @@
     const isCanvasDoc    = /^(.*\.)*canvadocs\.instructure\.com$/.test(location.hostname);
     const isRoosterTeeth = /^(.*\.)*roosterteeth\.com$/.test(location.hostname);
     const isAniWatch     = /^(.*\.)*megacloud\.tv$/.test(location.hostname);
+    const isCrunchyroll  = /^(.*\.)*static\.crunchyroll\.com$/.test(location.hostname);
 
-    let targetClass  = "";
+    let bufferSearch = () => []
     let ratClasses   = [];
-    let doKidnap     = false;
+    let ratStyle     = {};
     let stealClasses = true;
+    let doKidnap     = false;
     if (isYouTube) {
-        targetClass = "ytp-spinner-container";
+        bufferSearch = () => [...document.getElementsByClassName("ytp-spinner-container")]
     } else if (isCanvasVideo) {
-        targetClass = "css-1pisf2f-view-spinner";
+        bufferSearch = () => [...document.getElementsByClassName("css-1pisf2f-view-spinner")]
     } else if (isCanvasDoc) {
-        targetClass = "InstUISpinner";
+        bufferSearch = () => [...document.getElementsByClassName("InstUISpinner")]
     } else if (isRoosterTeeth) {
-        targetClass = "vjs-loading-spinner";
+        bufferSearch = () => [...document.getElementsByClassName("vjs-loading-spinner")]
         doKidnap = true;
     } else if (isAniWatch) {
-        targetClass = "jw-svg-icon-buffer";
+        bufferSearch = () => [...document.getElementsByClassName("jw-svg-icon-buffer")]
+    } else if (isCrunchyroll) {
+        bufferSearch = () => [...document.getElementsByTagName("div")].filter(x => x.getAttribute("data-testid") === "vilos-loading").map(x => x.lastElementChild)
+        ratStyle = {width: "64px", height: "64px"}
     } else {
         return;
     }
 
     const observer = new MutationObserver(function(mrs) {
-        [...document.getElementsByClassName(targetClass)].filter((buffer) => buffer.tagName !== "IMG").forEach((buffer) => {
+        bufferSearch().filter((buffer) => buffer.tagName !== "IMG").forEach((buffer) => {
             const rat = document.createElement("img");
             rat.src = ratURL;
             rat.classList.add(...(stealClasses ? buffer.classList : ratClasses));
+            for (let prop of ratStyle) {rat.style.setProperty(prop, ratStyle[prop]);}
 
             buffer.parentElement.replaceChild(rat, buffer);
             if (doKidnap) {
