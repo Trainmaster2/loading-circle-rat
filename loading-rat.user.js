@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      4.1
+// @version      4.2
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
 // @icon         https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif
@@ -56,7 +56,7 @@
             const rat = document.createElement("img");
             rat.src = ratURL;
             rat.classList.add(...(stealClasses ? buffer.classList : ratClasses));
-            for (let prop of ratStyle) {rat.style.setProperty(prop, ratStyle[prop]);}
+            for (let prop in ratStyle) {rat.style.setProperty(prop, ratStyle[prop]);}
 
             buffer.parentElement.replaceChild(rat, buffer);
             if (doKidnap) {
