@@ -8,5 +8,6 @@ Currently Supported:
 - Canvas Video and Documents (***instructuremedia.com*** & ***canvadocs.instructure.com***)
 - Rooster Teeth
 - AniWatch (***megacloud.tv***)
+- Crunchyroll (***static.crunchyroll.com***)
 
 Rat GIF originally from [Know Your Meme](https://knowyourmeme.com/memes/horizontally-spinning-rat) [[Image](https://i.kym-cdn.com/photos/images/original/002/422/229/cd5.gif)]
