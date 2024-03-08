@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      4.2
+// @version      4.3
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
 // @icon         https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif
@@ -12,6 +12,7 @@
 // @match        *://*.roosterteeth.com/*
 // @match        *://*.megacloud.tv/*
 // @match        *://*.static.crunchyroll.com/*
+// @match        *://*.amazon.com/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -27,12 +28,14 @@
     const isRoosterTeeth = /^(.*\.)*roosterteeth\.com$/.test(location.hostname);
     const isAniWatch     = /^(.*\.)*megacloud\.tv$/.test(location.hostname);
     const isCrunchyroll  = /^(.*\.)*static\.crunchyroll\.com$/.test(location.hostname);
+    const isPrimeVideo   = /^(.*\.)*amazon\.com$/.test(location.hostname);
 
     let bufferSearch = () => []
     let ratClasses   = [];
     let ratStyle     = {};
     let stealClasses = true;
     let doKidnap     = false;
+    let replaceImage = false;
     if (isYouTube) {
         bufferSearch = () => [...document.getElementsByClassName("ytp-spinner-container")]
     } else if (isCanvasVideo) {
@@ -47,21 +50,28 @@
     } else if (isCrunchyroll) {
         bufferSearch = () => [...document.getElementsByTagName("div")].filter(x => x.getAttribute("data-testid") === "vilos-loading").map(x => x.lastElementChild)
         ratStyle = {width: "64px", height: "64px"}
+    } else if (isPrimeVideo) {
+        bufferSearch = () => [document.getElementsByClassName("atvwebplayersdk-loadingspinner-overlay")[0].querySelector(".fuorrko")]
+        replaceImage = true;
     } else {
         return;
     }
 
     const observer = new MutationObserver(function(mrs) {
-        bufferSearch().filter((buffer) => buffer.tagName !== "IMG").forEach((buffer) => {
-            const rat = document.createElement("img");
-            rat.src = ratURL;
-            rat.classList.add(...(stealClasses ? buffer.classList : ratClasses));
-            for (let prop in ratStyle) {rat.style.setProperty(prop, ratStyle[prop]);}
+        bufferSearch().filter((buffer) => (buffer.tagName !== "IMG") || (buffer.src !== ratURL)).forEach((buffer) => {
+            if (replaceImage) {
+                buffer.src = ratURL;
+            } else {
+                const rat = document.createElement("img");
+                rat.src = ratURL;
+                rat.classList.add(...(stealClasses ? buffer.classList : ratClasses));
+                for (let prop in ratStyle) {rat.style.setProperty(prop, ratStyle[prop]);}
 
-            buffer.parentElement.replaceChild(rat, buffer);
-            if (doKidnap) {
-                while (buffer.childNodes.length > 0) {
-                    rat.appendChild(buffer.childNodes[0]);
+                buffer.parentElement.replaceChild(rat, buffer);
+                if (doKidnap) {
+                    while (buffer.childNodes.length > 0) {
+                        rat.appendChild(buffer.childNodes[0]);
+                    }
                 }
             }
         })
