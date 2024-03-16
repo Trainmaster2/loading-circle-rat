@@ -7,7 +7,7 @@ Currently Supported:
 - YouTube
 - Canvas Video and Documents (***instructuremedia.com*** & ***canvadocs.instructure.com***)
 - Rooster Teeth
-- AniWatch (***megacloud.tv***)
+- HiAnime (***megacloud.tv***)
 - Crunchyroll (***static.crunchyroll.com***)
 - Prime Video
 
