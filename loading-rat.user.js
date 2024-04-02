@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Loading Rat
-// @version      4.3
+// @version      4.4
 // @description  Replaces the loading circle with rotating rat on various websites
 // @author       Trainmaster2
 // @icon         https://github.com/Trainmaster2/loading-circle-rat/raw/master/rat.gif
@@ -11,6 +11,7 @@
 // @match        *://*.canvadocs.instructure.com/*
 // @match        *://*.roosterteeth.com/*
 // @match        *://*.megacloud.tv/*
+// @match        *://*.c8365730d4.nl/*
 // @match        *://*.static.crunchyroll.com/*
 // @match        *://*.amazon.com/*
 // @run-at       document-start
@@ -27,6 +28,7 @@
     const isCanvasDoc    = /^(.*\.)*canvadocs\.instructure\.com$/.test(location.hostname);
     const isRoosterTeeth = /^(.*\.)*roosterteeth\.com$/.test(location.hostname);
     const isAniWatch     = /^(.*\.)*megacloud\.tv$/.test(location.hostname);
+    const isFMovies      = /^(.*\.)*c8365730d4\.nl/.test(location.hostname);
     const isCrunchyroll  = /^(.*\.)*static\.crunchyroll\.com$/.test(location.hostname);
     const isPrimeVideo   = /^(.*\.)*amazon\.com$/.test(location.hostname);
 
@@ -45,7 +47,7 @@
     } else if (isRoosterTeeth) {
         bufferSearch = () => [...document.getElementsByClassName("vjs-loading-spinner")]
         doKidnap = true;
-    } else if (isAniWatch) {
+    } else if (isAniWatch || isFMovies) {
         bufferSearch = () => [...document.getElementsByClassName("jw-svg-icon-buffer")]
     } else if (isCrunchyroll) {
         bufferSearch = () => [...document.getElementsByTagName("div")].filter(x => x.getAttribute("data-testid") === "vilos-loading").map(x => x.lastElementChild)

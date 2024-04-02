@@ -8,6 +8,7 @@ Currently Supported:
 - Canvas Video and Documents (***instructuremedia.com*** & ***canvadocs.instructure.com***)
 - Rooster Teeth
 - HiAnime (***megacloud.tv***)
+- FMovies (***c8365730d4.nl***)
 - Crunchyroll (***static.crunchyroll.com***)
 - Prime Video
 
