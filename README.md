@@ -17,4 +17,4 @@ Rat GIF originally from [Know Your Meme](https://knowyourmeme.com/memes/horizont
 Installation
 ------------
 1. [Install a userscript extension](https://greasyfork.org/en/help/installing-user-scripts)
-2. Click [HERE](https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js)https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js) to install the script
+2. Click [HERE](https://github.com/Trainmaster2/loading-circle-rat/raw/master/loading-rat.user.js) to install the script
